@@ -16,7 +16,7 @@ A sleek, dark-themed study tracker designed for students to monitor their academ
 - **Smooth Animations**: Subtle hover effects and transitions
 - **Professional Typography**: Easy-to-read fonts with proper contrast
 
-###**Smart Analytics**
+### **Smart Analytics**
 - **Dashboard Overview**: Quick stats showing total chapters, completion rate, and streaks
 - **Rating System**: Rate chapter difficulty across Academic Class, Test Papers, and Engineering QB
 - **Last Studied Tracking**: Keep track of when you last worked on each topic
