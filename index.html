@@ -2,63 +2,12 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>GrindGrid - Study Tracker</title>
-        <link rel="stylesheet" href="style.css" />
+        <title>GrindGrid Study Tracker</title>
     </head>
     <body>
-        <div class="header">
-            <h1>GrindGrid - Study Tracker</h1>
-            <div class="header-controls">
-                <div class="overall-progress">
-                    <span>Overall Progress: </span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="overall-progress"></div>
-                    </div>
-                    <span id="overall-percentage">0%</span>
-                </div>
-                <div class="header-buttons">
-                    <button id="export-btn" class="btn-secondary">
-                        Export Data
-                    </button>
-                    <button id="reset-btn" class="btn-danger">Reset All</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="dashboard">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" id="total-chapters">0</div>
-                    <div class="stat-label">Total Chapters</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="completed-chapters">0</div>
-                    <div class="stat-label">Completed</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="study-streak">0</div>
-                    <div class="stat-label">Day Streak</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="total-sessions">0</div>
-                    <div class="stat-label">Study Sessions</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="search-container">
-            <input
-                type="text"
-                id="search-input"
-                placeholder="🔍 Search chapters..."
-            />
-        </div>
-
-        <div id="app"></div>
-
-        <div id="toast" class="toast"></div>
-
-        <script src="script.js"></script>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
     </body>
 </html>
