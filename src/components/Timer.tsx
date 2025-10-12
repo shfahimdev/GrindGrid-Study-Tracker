@@ -1,30 +1,47 @@
 import { useState, useEffect, useRef } from "react";
 import SubjectSelector from "./SubjectSelector";
 import useSessionStore from "../store/sessionStore";
-import { getCurrentDate, formatTime } from "../utils/dateUtils";
+import { getCurrentDate } from "../utils/dateUtils";
 import type { StudySession } from "../store/sessionStore";
 
 const Timer = () => {
-    const [time, setTime] = useState(0);
+    const [displayTime, setDisplayTime] = useState("00:00");
     const [isRunning, setIsRunning] = useState(false);
     const [selectedSubject, setSelectedSubject] = useState("");
     const intervalRef = useRef<number | null>(null);
+    const startTimeRef = useRef<Date | null>(null);
     const { currentSession, setCurrentSession, addSession } = useSessionStore();
 
     // Format time for display (MM:SS)
-    const formatTimeDisplay = (seconds: number): string => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
+    const formatTimeDisplay = (elapsedMs: number): string => {
+        const totalSeconds = Math.floor(elapsedMs / 1000);
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
         return `${mins.toString().padStart(2, "0")}:${secs
             .toString()
             .padStart(2, "0")}`;
     };
 
+    // Calculate elapsed time based on timestamps
+    const calculateElapsedTime = (): number => {
+        if (!startTimeRef.current) return 0;
+        return Date.now() - startTimeRef.current.getTime();
+    };
+
+    // Update timer display
+    const updateTimerDisplay = () => {
+        const elapsedMs = calculateElapsedTime();
+        setDisplayTime(formatTimeDisplay(elapsedMs));
+    };
+
     // Handle timer logic
     useEffect(() => {
         if (isRunning) {
+            // Update immediately and then every second
+            updateTimerDisplay();
+
             intervalRef.current = window.setInterval(() => {
-                setTime((prevTime) => prevTime + 1);
+                updateTimerDisplay();
             }, 1000);
         } else if (intervalRef.current) {
             clearInterval(intervalRef.current);
@@ -44,13 +61,15 @@ const Timer = () => {
             return;
         }
 
+        const now = new Date();
+        startTimeRef.current = now;
         setIsRunning(true);
-        const startTime = new Date();
+        setDisplayTime("00:00");
 
         const newSession: StudySession = {
             id: Math.random().toString(36).substring(2, 9),
             subject: selectedSubject,
-            startTime: formatTime(startTime),
+            startTime: now.toISOString(),
             endTime: "",
             duration: 0,
             date: getCurrentDate(),
@@ -63,27 +82,33 @@ const Timer = () => {
     const stopTimer = () => {
         setIsRunning(false);
 
-        if (currentSession) {
+        if (currentSession && startTimeRef.current) {
             const endTime = new Date();
-            const duration = Math.floor(time / 60); // Duration in minutes
+
+            // Calculate duration in minutes from timestamps
+            const durationMs =
+                endTime.getTime() - startTimeRef.current.getTime();
+            const durationMinutes = Math.round(durationMs / (1000 * 60));
 
             const completedSession: StudySession = {
                 ...currentSession,
-                endTime: formatTime(endTime),
-                duration: duration,
+                endTime: endTime.toISOString(),
+                duration: durationMinutes,
             };
 
             addSession(completedSession);
             setCurrentSession(null);
+            startTimeRef.current = null;
         }
 
-        setTime(0);
+        setDisplayTime("00:00");
     };
 
     // Reset the timer
     const resetTimer = () => {
         setIsRunning(false);
-        setTime(0);
+        setDisplayTime("00:00");
+        startTimeRef.current = null;
         setCurrentSession(null);
     };
 
@@ -101,7 +126,7 @@ const Timer = () => {
             </div>
 
             <div className="text-4xl font-mono font-bold text-center my-6">
-                {formatTimeDisplay(time)}
+                {displayTime}
             </div>
 
             <div className="flex justify-center space-x-4">

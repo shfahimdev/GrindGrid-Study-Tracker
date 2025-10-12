@@ -6,8 +6,8 @@ import { getCurrentDate } from "../utils/dateUtils";
 export interface StudySession {
     id: string;
     subject: string;
-    startTime: string;
-    endTime: string;
+    startTime: string; // ISO string timestamp
+    endTime: string; // ISO string timestamp
     duration: number; // in minutes
     date: string;
 }
