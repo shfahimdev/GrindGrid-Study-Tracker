@@ -265,7 +265,7 @@ const StudyTracker = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-indigo-900 mb-8">Fahim's Study Journal</h1>
+        <h1 className="text-4xl font-bold text-center text-indigo-900 mb-8">GrindGrid Study Tracker</h1>
         
         {/* Form Section */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
