@@ -562,18 +562,6 @@ const StudyTracker = () => {
             </div>
 
             <div className="border border-gray-200 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-gray-700 mb-3">Avg Focus by Subject</h3>
-              {Object.entries(metrics.avgFocusBySubject).map(([subject, focus]) => (
-                <div key={subject} className="flex justify-between items-center mb-2">
-                  <span className="text-gray-600">{subject}</span>
-                  <span className={`font-semibold ${focus < 3 ? 'text-red-600' : 'text-green-600'}`}>
-                    {(focus / 5).toFixed(2)}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="border border-gray-200 rounded-lg p-4">
               <h3 className="text-lg font-semibold text-gray-700 mb-3">Hours by Chapter</h3>
               {Object.entries(metrics.hoursByChapter).map(([chapter, hours]) => (
                 <div key={chapter} className="flex justify-between items-center mb-2">
