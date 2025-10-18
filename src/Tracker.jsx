@@ -567,7 +567,7 @@ const StudyTracker = () => {
                 <div key={subject} className="flex justify-between items-center mb-2">
                   <span className="text-gray-600">{subject}</span>
                   <span className={`font-semibold ${focus < 3 ? 'text-red-600' : 'text-green-600'}`}>
-                    {focus}/5
+                    {(focus / 5).toFixed(2)}
                   </span>
                 </div>
               ))}
