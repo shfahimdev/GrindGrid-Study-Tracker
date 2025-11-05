@@ -92,11 +92,11 @@ const DailyStudyTrend = ({ hoursByDate, hasFilters }) => {
   // Determine bar size based on data points
   const getBarSize = () => {
     const totalDays = chartData.length;
-    if (totalDays <= 7) return 50;
-    if (totalDays <= 15) return 35;
-    if (totalDays <= 30) return 20;
-    if (totalDays <= 90) return 12;
-    if (totalDays <= 180) return 8;
+    if (totalDays <= 7) return 70;
+    if (totalDays <= 15) return 50;
+    if (totalDays <= 30) return 30;
+    if (totalDays <= 90) return 16;
+    if (totalDays <= 180) return 12;
     return 4;
   };
 
@@ -123,7 +123,9 @@ const DailyStudyTrend = ({ hoursByDate, hasFilters }) => {
           {chartData.length} {chartData.length === 1 ? 'day' : 'days'}
         </span>
       </div>
-      <div className="w-full" style={{ height: '400px' }}>
+      
+      {/* 1. Increased height here */}
+      <div className="w-full" style={{ height: '500px' }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
@@ -147,7 +149,9 @@ const DailyStudyTrend = ({ hoursByDate, hasFilters }) => {
             <Bar
               dataKey="hours"
               radius={[8, 8, 0, 0]}
-              maxBarSize={getBarSize()}
+              
+              /* 2. Changed from maxBarSize to barSize */
+              barSize={getBarSize()}
             >
               {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={getGradientColor(index, chartData.length)} />
@@ -161,4 +165,3 @@ const DailyStudyTrend = ({ hoursByDate, hasFilters }) => {
 };
 
 export default DailyStudyTrend;
-
