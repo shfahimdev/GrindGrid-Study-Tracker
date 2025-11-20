@@ -1,3 +1,5 @@
+// Analytics.jsx
+
 import React, { useState, useMemo } from 'react';
 import { useStudy } from '../../context/StudyContext';
 import { useMetrics } from '../../hooks/useMetrics';
@@ -13,15 +15,24 @@ const Analytics = () => {
   const { getFilteredEntries, loading } = useStudy();
   const allEntries = getFilteredEntries();
 
-  // Filter state
+  // Get dates for last 30 days
+  const getDefaultDateRange = () => {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - 30);
+    
+    return {
+      start: start.toISOString().split('T')[0],
+      end: end.toISOString().split('T')[0]
+    };
+  };
+
+  // Filter state with last 30 days pre-selected
   const [filters, setFilters] = useState({
     subject: '',
     chapter: '',
     topic: '',
-    dateRange: {
-      start: null,
-      end: null
-    }
+    dateRange: getDefaultDateRange()
   });
 
   // Apply filters to entries
@@ -92,10 +103,7 @@ const Analytics = () => {
       subject: '',
       chapter: '',
       topic: '',
-      dateRange: {
-        start: null,
-        end: null
-      }
+      dateRange: getDefaultDateRange() // Reset to last 30 days, not empty
     });
   };
 
